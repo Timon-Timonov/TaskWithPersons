@@ -38,22 +38,6 @@ public class App {
 		names.forEach((str) -> System.out.println(i.getAndIncrement() + ") " + str));
 	}
 
-	public static void writePersonsInFile(List<Person> list, String path) {
-
-		try (ObjectOutputStream oo = new ObjectOutputStream(
-				new FileOutputStream(path))) {
-			list.forEach((P) -> {
-				try {
-					oo.writeObject(P);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static List<Person> readPersonsFromFile(String path) {
 
 		List<Person> list = new ArrayList<>();
@@ -73,5 +57,21 @@ public class App {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public static void writePersonsInFile(List<Person> list, String path) {
+
+		try (ObjectOutputStream oo = new ObjectOutputStream(
+				new FileOutputStream(path))) {
+			list.forEach((P) -> {
+				try {
+					oo.writeObject(P);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

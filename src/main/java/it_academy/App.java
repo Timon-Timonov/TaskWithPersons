@@ -6,12 +6,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static it_academy.PersonsFieldsGenerator.*;
 
 public class App {
 
 	public static void main(String[] args) {
 
-		List<Person> personList = PersonsGenerator.generatePersons(ConstantContainer.COUNT_OF_PERSONS);
+		List<Person> personList = IntStream.range(0, ConstantContainer.COUNT_OF_PERSONS)
+				.mapToObj(i -> new Person(
+						getRandName(),
+						getRandSurName(),
+						getRandAge()))
+				.collect(Collectors.toList());
 
 		System.out.println("Persons with age less then " + ConstantContainer.FILTER_MAX_AGE_EXCLUDE + " years:");
 		AtomicInteger i = new AtomicInteger(1);

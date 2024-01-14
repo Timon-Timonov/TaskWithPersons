@@ -7,7 +7,9 @@ public class PersonsFieldsGenerator {
 	private static Random rnd = new Random();
 
 	public static int getRandAge() {
-		return (rnd.nextInt(ConstantContainer.MAX_AGE - ConstantContainer.MIN_AGE + 1) + ConstantContainer.MIN_AGE);
+		int min = ConstantContainer.MIN_AGE;
+		int max = ConstantContainer.MAX_AGE;
+		return (rnd.nextInt(max - min + 1) + min);
 	}
 
 	public static String getRandName() {

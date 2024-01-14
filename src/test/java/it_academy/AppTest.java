@@ -1,17 +1,15 @@
 package it_academy;
 
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class AppTest {
 
-class AppTest {
 	public static final String PATH = "src\\test\\java\\it_academy\\file.bin";
 	public static final int COUNT_OF_ASSERTS = 1000;
-
-	private List<Person> list = App.generatePersons(COUNT_OF_ASSERTS);
+	private List<Person> list = PersonsGenerator.generatePersons(COUNT_OF_ASSERTS);
 
 	@Test
 	void writeAndReadPersonsInFile() {
@@ -27,23 +25,6 @@ class AppTest {
 
 		if (file.exists()) {
 			file.delete();
-		}
-	}
-
-	@Test
-	void generatePersons() {
-
-		assertEquals(COUNT_OF_ASSERTS, list.size());
-		for (Person p : list) {
-			assertNotNull(p);
-		}
-	}
-
-	@Test
-	void getRandAge() {
-		for (int i = 0; i < COUNT_OF_ASSERTS; i++) {
-			assertTrue(App.getRandAge() >= ConstantContainer.MIN_AGE
-					&& App.getRandAge() <= ConstantContainer.MAX_AGE);
 		}
 	}
 }

@@ -1,21 +1,25 @@
 package it_academy;
 
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static it_academy.PersonsFieldsGenerator.*;
 
 public class App {
 
-	static Random rnd = new Random();
-
 	public static void main(String[] args) {
 
-		List<Person> personList = generatePersons(ConstantContainer.COUNT_OF_PERSONS);
+		List<Person> personList = IntStream.range(0, ConstantContainer.COUNT_OF_PERSONS)
+				.mapToObj(i -> new Person(
+						getRandName(),
+						getRandSurName(),
+						getRandAge()))
+				.collect(Collectors.toList());
 
 		System.out.println("Persons with age less then " + ConstantContainer.FILTER_MAX_AGE_EXCLUDE + " years:");
 		AtomicInteger i = new AtomicInteger(1);
@@ -77,32 +81,5 @@ public class App {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static List<Person> generatePersons(int count) {
-
-		List<Person> personList = new ArrayList<>();
-
-		for (int i = 0; i < count; i++) {
-			personList.add(new Person(
-					getRandName(),
-					getRandSurName(),
-					getRandAge()));
-		}
-		return personList;
-	}
-
-	public static int getRandAge() {
-		int min = ConstantContainer.MIN_AGE;
-		int max = ConstantContainer.MAX_AGE;
-		return (rnd.nextInt(max - min + 1) + min);
-	}
-
-	private static String getRandName() {
-		return ConstantContainer.names[rnd.nextInt(ConstantContainer.names.length)];
-	}
-
-	private static String getRandSurName() {
-		return ConstantContainer.surNames[rnd.nextInt(ConstantContainer.surNames.length)];
 	}
 }

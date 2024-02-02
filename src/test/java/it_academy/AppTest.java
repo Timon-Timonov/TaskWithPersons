@@ -4,14 +4,22 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static it_academy.PersonsFieldsGenerator.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AppTest {
+public class AppTest {
+
 	public static final String PATH = "src\\test\\java\\it_academy\\file.bin";
 	public static final int COUNT_OF_ASSERTS = 1000;
-
-	private List<Person> list = App.generatePersons(COUNT_OF_ASSERTS);
+	private List<Person> list = IntStream.range(0, COUNT_OF_ASSERTS)
+			.mapToObj(i -> new Person(
+					getRandName(),
+					getRandSurName(),
+					getRandAge()))
+			.collect(Collectors.toList());
 
 	@Test
 	void writeAndReadPersonsInFile() {
@@ -27,23 +35,6 @@ class AppTest {
 
 		if (file.exists()) {
 			file.delete();
-		}
-	}
-
-	@Test
-	void generatePersons() {
-
-		assertEquals(COUNT_OF_ASSERTS, list.size());
-		for (Person p : list) {
-			assertNotNull(p);
-		}
-	}
-
-	@Test
-	void getRandAge() {
-		for (int i = 0; i < COUNT_OF_ASSERTS; i++) {
-			assertTrue(App.getRandAge() >= ConstantContainer.MIN_AGE
-					&& App.getRandAge() <= ConstantContainer.MAX_AGE);
 		}
 	}
 }
